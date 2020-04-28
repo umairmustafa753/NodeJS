@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const noteRoutes = require("./routes/api/note");
+const noteRoutes = require("./routes/api");
+const authRoutes = require("./routes/auth");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -21,7 +22,8 @@ mongoose.connection.on("error", (err) => {
 
 //middleware
 app.use(bodyParser.json());
-app.use("/api/", noteRoutes);
+app.use("/api", noteRoutes);
+app.use("/auth", authRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server is running on port: " + port));
