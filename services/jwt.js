@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const secret = process.env.JWT_SECRET;
 
@@ -21,7 +23,7 @@ const JWT = {
         role: user.role,
         exp: Math.floor(Date.now() / 1000) + 60 * 60
       },
-      "thisissecret"
+      secret
     );
   }
 };

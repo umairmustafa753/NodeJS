@@ -2,11 +2,14 @@ const express = require("express");
 const { check } = require("express-validator");
 const { getNote, createNote, removeNote } = require("../controller/note");
 const { expressPostValidator } = require("../validator/note");
+
+const Authorization = require("./../middleware/Authorization");
 const api = express.Router();
 
-api.get("/", getNote);
+api.get("/", Authorization, getNote);
 api.post(
   "/note",
+  Authorization,
   //For title err
   check("title").notEmpty().withMessage("Write a title"),
   check("title")
@@ -21,6 +24,6 @@ api.post(
   createNote
 );
 
-api.delete("/note/:id", removeNote);
+api.delete("/note/:id", Authorization, removeNote);
 
 module.exports = api;
