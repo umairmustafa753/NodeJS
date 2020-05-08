@@ -17,7 +17,9 @@ module.exports = {
       }
     } catch (error) {
       console.log("error", error);
-      res.status(500).send({ error: "Please try again" });
+      res
+        .status(500)
+        .send({ message: "fill all fields and enter unique username" });
     }
   },
   Login: async (req, res) => {

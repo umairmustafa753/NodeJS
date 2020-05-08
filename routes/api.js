@@ -1,7 +1,8 @@
 const express = require("express");
 const { check } = require("express-validator");
 const {
-  getNote,
+  getAllNotes,
+  getUserNotes,
   createNote,
   removeNote,
   updateNote
@@ -11,7 +12,10 @@ const { expressPostValidator } = require("../validator/note");
 const Authorization = require("./../middleware/Authorization");
 const api = express.Router();
 
-api.get("/", Authorization, getNote);
+api.get("/note", Authorization, getAllNotes);
+
+api.get("/note/user/:id", Authorization, getUserNotes);
+
 api.post(
   "/note",
   Authorization,
@@ -23,6 +27,7 @@ api.post(
   check("body")
     .isLength({ min: 4, max: 150 })
     .withMessage("Body must be of 4 or 150 character"),
+  check("userid").notEmpty().withMessage("please give userid"),
   expressPostValidator,
   createNote
 );
