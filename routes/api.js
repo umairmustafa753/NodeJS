@@ -47,6 +47,6 @@ api.put(
   updateNote
 );
 
-api.delete("/note", Authorization, removeNote);
+api.delete("/note/:id", Authorization, removeNote);
 
 module.exports = api;

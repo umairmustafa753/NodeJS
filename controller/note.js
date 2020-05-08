@@ -4,7 +4,6 @@ const NotesFromService = require("../services/note");
 exports.getAllNotes = async (req, res) => {
   try {
     Note.find()
-      .select("id userid title body time")
       .then((Notes) => {
         res.status(200).json({ Notes: Notes });
       })
@@ -23,7 +22,7 @@ exports.getUserNotes = async (req, res) => {
       })
       .catch((err) => console.log("error message: ", err));
   } catch (error) {
-    res.status(500).send({ error: "Please try again" });
+    res.status(500).send({ message: "Please try again" });
   }
 };
 
@@ -37,7 +36,8 @@ exports.createNote = (req, res) => {
     const note = new Note(noteBody);
     note.save().then((result) => {
       res.status(200).json({
-        Note: result
+        Note: result,
+        message: "Note created Succesfully"
       });
     });
   } catch (error) {
@@ -78,7 +78,7 @@ exports.removeNote = (req, res) => {
       else {
         res
           .status(200)
-          .send({ data: {}, message: "Item deleted Successfully" });
+          .send({ data: {}, message: "Note deleted Successfully" });
       }
     });
   } catch (error) {
