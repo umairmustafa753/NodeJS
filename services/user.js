@@ -6,7 +6,6 @@ var salt = bcrypt.genSaltSync(saltRounds);
 const Users = {
   createUser: async (obj) => {
     try {
-      // encrypt password
       obj.password = bcrypt.hashSync(obj.password, salt);
       const newUser = new User(obj);
       const data = await newUser.save();
@@ -21,6 +20,16 @@ const Users = {
   getByEmail: async (email) => {
     try {
       const query = User.findOne({ email });
+      return await query.exec();
+    } catch (error) {
+      throw error;
+    }
+  },
+  getUsers: async (obj) => {
+    try {
+      const query = User.find(obj).select(
+        "_id firstName lastName username role createdAt updatedAt"
+      );
       return await query.exec();
     } catch (error) {
       throw error;

@@ -9,6 +9,14 @@ const Notes = {
       console.log("error", error);
       throw error;
     }
+  },
+  getByEmail: async (email) => {
+    try {
+      const query = Note.findOne({ email });
+      return await query.exec();
+    } catch (error) {
+      throw error;
+    }
   }
 };
 

@@ -1,37 +1,25 @@
 const express = require("express");
 const { check } = require("express-validator");
-const {
-  getAllNotes,
-  getUserNotes,
-  createNote,
-  removeNote,
-  updateNote
-} = require("../controller/note");
-const { expressPostValidator } = require("../validator/note");
+const { expressPostValidator } = require("../validator/validate");
 
 const Authorization = require("./../middleware/Authorization");
+const Note = require("../controller/note");
+const User = require("../controller/user");
+
 const api = express.Router();
 
-api.get("/note", Authorization, getAllNotes);
-
-api.get("/note/user/:id", Authorization, getUserNotes);
-
+// note api
+api.get("/note", Authorization, Note.getAllNotes);
+api.get("/user/note/:email", Authorization, Note.getUserNotes);
 api.post(
   "/note",
   Authorization,
-  check("title").notEmpty().withMessage("Write a title"),
-  check("title")
-    .isLength({ min: 4, max: 150 })
-    .withMessage("Title must be of 4 or 150 character"),
-  check("body").notEmpty().withMessage("Write a Body"),
-  check("body")
-    .isLength({ min: 4, max: 150 })
-    .withMessage("Body must be of 4 or 150 character"),
+  check("title").notEmpty().withMessage("title is required"),
+  check("body").notEmpty().withMessage("Body is required"),
   check("userid").notEmpty().withMessage("please give userid"),
   expressPostValidator,
-  createNote
+  Note.createNote
 );
-
 api.put(
   "/note",
   Authorization,
@@ -44,9 +32,12 @@ api.put(
     .isLength({ min: 4, max: 150 })
     .withMessage("Body must be of 4 or 150 character"),
   expressPostValidator,
-  updateNote
+  Note.updateNote
 );
+api.delete("/note/:id", Authorization, Note.removeNote);
 
-api.delete("/note/:id", Authorization, removeNote);
+//user api
+api.get("/users", Authorization, User.GetUsers);
+api.delete("/users/:id", Authorization, User.removeUser);
 
 module.exports = api;
