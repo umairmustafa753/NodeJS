@@ -2,7 +2,7 @@ const UserFromService = require("../services/user");
 const User = require("../model/user");
 
 module.exports = {
-  GetUsers: async (req, res) => {
+  getUsers: async (req, res) => {
     try {
       let user = await UserFromService.getUsers({ role: "S" });
       if (user) {

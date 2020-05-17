@@ -17,6 +17,19 @@ const Users = {
       throw error;
     }
   },
+
+  getById: async (id) => {
+    const query = User.findById(id).select(
+      "_id firstName lastName username email role createdAt updatedAt"
+    );
+    try {
+      return await query.exec();
+    } catch (error) {
+      console.log("error", error);
+      throw error;
+    }
+  },
+
   getByEmail: async (email) => {
     try {
       const query = User.findOne({ email });
@@ -25,6 +38,7 @@ const Users = {
       throw error;
     }
   },
+
   getUsers: async (obj) => {
     try {
       const query = User.find(obj).select(
@@ -35,6 +49,7 @@ const Users = {
       throw error;
     }
   },
+
   compare: (hash, pass) => {
     return bcrypt.compareSync(pass, hash);
   }

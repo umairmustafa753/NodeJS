@@ -24,20 +24,15 @@ api.put(
   "/note",
   Authorization,
   check("title").notEmpty().withMessage("Write a title"),
-  check("title")
-    .isLength({ min: 4, max: 150 })
-    .withMessage("Title must be of 4 or 150 character"),
   check("body").notEmpty().withMessage("Write a Body"),
-  check("body")
-    .isLength({ min: 4, max: 150 })
-    .withMessage("Body must be of 4 or 150 character"),
+  check("userid").notEmpty().withMessage("please give userid"),
   expressPostValidator,
   Note.updateNote
 );
 api.delete("/note/:id", Authorization, Note.removeNote);
 
 //user api
-api.get("/users", Authorization, User.GetUsers);
+api.get("/users", Authorization, User.getUsers);
 api.delete("/users/:id", Authorization, User.removeUser);
 
 module.exports = api;

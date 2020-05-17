@@ -10,6 +10,7 @@ const Notes = {
       throw error;
     }
   },
+
   getByEmail: async (email) => {
     try {
       const query = Note.findOne({ email });

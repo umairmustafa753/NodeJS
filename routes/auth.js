@@ -3,6 +3,7 @@ const { expressPostValidator } = require("../validator/validate");
 
 const express = require("express");
 const Auth = require("../controller/auth");
+const Authorization = require("./../middleware/Authorization");
 
 const api = express.Router();
 
@@ -27,5 +28,7 @@ api.post(
   expressPostValidator,
   Auth.Login
 );
+
+api.get("/signin/:id", Authorization, Auth.autoLogin);
 
 module.exports = api;
