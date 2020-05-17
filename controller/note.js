@@ -17,7 +17,7 @@ module.exports = {
   getUserNotes: async (req, res) => {
     try {
       Note.find({ email: req.params.email })
-        .select("id userid email title body time")
+        .select("id userid email title body updatedAt")
         .then((Notes) => {
           res.status(200).json({ Notes: Notes });
         })
