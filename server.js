@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const noteRoutes = require("./routes/api");
 const authRoutes = require("./routes/auth");
 const dotenv = require("dotenv");
@@ -24,8 +25,14 @@ mongoose.connection.on("error", (err) => {
 
 //middleware
 app.use(bodyParser.json());
-app.use("/api", noteRoutes);
-app.use("/auth", authRoutes);
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
+app.use("/api", cors(), noteRoutes);
+app.use("/auth", cors(), authRoutes);
 app.use("*", (req, res) => {
   res.send("Not Found!");
 });
